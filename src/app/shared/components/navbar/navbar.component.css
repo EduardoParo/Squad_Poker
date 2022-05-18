@@ -1,0 +1,18 @@
+/*Menu Superior
+------------------------------------------*/
+.menuSup{
+	background 	  : #042331;
+	line-height   :50px;
+}
+
+.menuSup #abrirMenu{
+	width: 80px;
+	background 	:  #042331;
+	font-size     : 20px;
+	line-height   :50px;
+	font-size     : 20px;
+	color         : white;
+	padding-left  : 30px;
+	
+
+}

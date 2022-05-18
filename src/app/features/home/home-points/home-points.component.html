@@ -1,0 +1,16 @@
+
+<div class="container mt-4 mb-5 ">
+    <div *ngIf="usrOnline?.participante!='espectador'" >
+        <h4  class="border-bottom " >Selecione uma Pontuação </h4>
+        <div class="row d-flex justify-content-center">
+            <div *ngFor="let point of [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]" class="mt-5">  
+                <button (click)="Voto(point)" class="btn btn-outline-primary btn-lg mr-3 mt-2 " id="{{point}}" align="center" >{{point}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
+
+
+ 

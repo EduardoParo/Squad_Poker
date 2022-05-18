@@ -1,0 +1,105 @@
+
+<div class="container mt-5 mb-5 ">
+      
+    <div class="row mt-5 border-bottom">
+        <div class="col-md-9 ">    
+            <h4  class="" >Pontuação</h4>
+        </div>       
+    </div>
+    <!--<pre>Usuarios = {{participants | json}}</pre>-->
+    <div id="cardUsuario" class="row">      
+        <div *ngFor="let user of participants" class="col-md-2">
+            <div  class="card mt-3">
+                  <div class="card-ponto text-center">
+                    
+                    <span class = "text-primary" *ngIf="user.id == usrOnline.id || user.showVenc">
+                      <b>{{user.voto}}</b>
+                    </span>
+                    <span *ngIf="user.voto>0 && user.id != usrOnline.id  && !user.showVenc; else other_content">
+                        OK
+                    </span>
+                    <ng-template #other_content>
+                        <span *ngIf="user.id != usrOnline.id && !user.showVenc;">
+                            {{user.squad.toUpperCase().slice(0,3)}}
+                        </span>
+
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="usrOnline.participante == 'espectador'" class="row d-flex justify-content-center mt-5">
+        <span *ngIf="showBtnRealPoints ==true">
+          <button (click)="modalService.buildModal(1,participants)" class="btn btn-secondary text-white  btn-lg  mr-3 mb-2"> Revelar Pontos </button>
+        </span>  
+          <button (click)="modalService.buildModal(2,participants)" class="btn btn-warning text-white btn-lg  mb-2"> Reiniciar Pontos</button> 
+    </div>  
+</div>
+
+<!--GRID-->
+<div class="container mt-5 mb-5 ">
+    <h4  class="border-bottom" >Participantes</h4>
+    <div class="container bg-white mt-4 ">
+        <div class="row">
+            <div class="table-responsive  " style="overflow-x: hidden" >
+                  <table class="table table-bordered" >
+                      <thead>
+                          <tr class="bg-warning bg-gradient text-white ">
+                              <th>Nome</th>
+                              <th>Squad</th>
+                              <th>Voto</th>
+                              <th *ngIf="usrOnline.participante =='espectador' " >Ação</th>
+                          </tr>
+                      </thead>
+                      
+                      <tbody>
+                          <tr *ngFor="let user of participants">
+                              <td><!--Nome-->
+                                  <span *ngIf="user.id == usrOnline.id || usrOnline.participante =='espectador'" class = "text-primary">
+                                      <b>{{user.nome}}</b>
+                                    </span>
+                                    <span *ngIf="user.id != usrOnline?.id && usrOnline.participante !='espectador'">
+                                        ********
+                                  </span>
+                              </td>
+                              
+                              <!--Squad-->
+                              <td>
+                                <span *ngIf="user.id == usrOnline.id" class = "text-primary">
+                                    <b>{{user.squad}}</b>
+                                </span>
+                                <span *ngIf="user.id != usrOnline.id">
+                                    {{user.squad}}
+                                </span>
+                              </td>
+                              
+                              <td><!--Voto-->
+                                  <span  class = "text-primary" *ngIf="user.id == usrOnline.id || user.showVenc">
+                                      <b>{{user.voto}}</b>
+                                    </span>
+                                    <span *ngIf="user.id != usrOnline.id && !user.showVenc && user.voto == 0 ">
+                                        {{'?'}}
+                                    </span>
+                                    <span *ngIf="user.id != usrOnline.id && !user.showVenc && user.voto > 0 ">
+                                        {{'OK'}}
+                                    </span>
+                              </td>
+
+                              <td *ngIf="usrOnline.participante =='espectador' " ><!--Ações-->
+                                  <div class="col-md-12">
+                                      <button (click)="modalService.buildModal(5, user)" data-toggle="modal" data-target="#idModal" class="btn btn-danger  btn-md">
+                                          <span class="icon">X</span>
+                                      </button>
+                                  </div>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+            </div>
+            <!--<pre>{{participants|json}}</pre>-->
+        </div>
+    </div>
+</div>	
+
+
