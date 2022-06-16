@@ -76,34 +76,34 @@ export class ModalComponent implements OnInit, OnDestroy {
 
         if (opc == 1){
             this.tituloModal='Revelar Pontos';
-            this.bodyModal ='Tem certeza que deseja revelar os pontos ?'
+            this.bodyModal ='Tem certeza que deseja revelar os Pontos ?'
             this.funcActionModal = () => this.homeService.revealPoints(params);
     
 
         }else if (opc == 2){
             this.tituloModal='Resetar Pontos';
-            this.bodyModal ='Tem certeza que reiniciar os pontos ?'
+            this.bodyModal ='Tem certeza que deseja reiniciar os Pontos ?'
             this.funcActionModal = () => this.homeService.resetPoints(params);
           
         }else if (opc == 3){
             if(params[0] <= 1){
                 this.tituloModal=`${params.winnerPoint} Resultado !!! `;
-                this.bodyModal =` Não indentificamos um ganhador `;
+                this.bodyModal =` Não Indentificamos um Ganhador `;
             }else{
                 this.tituloModal=`${params.winnerPoint} Ganhou !!! `;
-                this.bodyModal =` ${params.qtdOfParticipants} participantes pontuaram ${params.winnerPoint}`;
+                this.bodyModal =` ${params.qtdOfParticipants} Participantes Pontuaram ${params.winnerPoint}`;
             }
             const modal = document.querySelector('#funcActionModal');
             modal?.setAttribute('style','display:none');
 
         }else if (opc == 4){
             this.tituloModal=" Empate !!! ";
-            this.bodyModal =`${params[0][0].qtdOfParticipants} participantes pontuaram ${params[0][0].winnerPoint}; e ${params[0][1].qtdOfParticipants} participantes ponturam ${params[0][1].winnerPoint}; `;  
+            this.bodyModal =`${params[0][0].qtdOfParticipants} Participantes Pontuaram ${params[0][0].winnerPoint}; e ${params[0][1].qtdOfParticipants} Participantes Ponturam ${params[0][1].winnerPoint}; `;  
             modal?.setAttribute('style','display:none');
             
         }else if (opc == 5){
             this.tituloModal='Desconectar Participante';
-            this.bodyModal =`Tem certeza que desconectar o participante ${params.nome} ?`;
+            this.bodyModal =`Tem certeza que deseja desconectar o Participante ${params.nome} ?`;
             this.funcActionModal = () =>this.homeService.delete(params);  
         }
 
