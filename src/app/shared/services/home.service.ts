@@ -44,9 +44,7 @@ export class HomeService extends BaseResourceService<User> implements OnInit {
             this.angFireDb.list(this.API).update(element.id, element); 
 
         });  
-
-        this.modalService.closeModal();
-           
+        this.modalService.closeModal();      
     }
 
     winnerPoint(participants:any){

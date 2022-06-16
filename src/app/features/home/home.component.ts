@@ -67,6 +67,19 @@ export class HomeComponent extends BaseResourceHome<User> implements OnInit{
     getAllParticipants(resp = []): void{
         this.participants = resp.filter((e:any)=>this.usrOnline.squad == e.squad &&
                     e.participante == "participante");
+
+        this.participants = this.shufflesUsers();
+    }
+
+    shufflesUsers(): User[]{
+        for (let i = this.participants.length - 1; i > 0; i--) {
+            // Escolhendo elemento aleatório
+            const j = Math.floor(Math.random() * (i + 1));
+            // Reposicionando elemento
+            [this.participants[i], this.participants[j]] = [this.participants[j], this.participants[i]];
+        }
+
+    return this.participants 
     }
 
     canResetPoint(): void {
