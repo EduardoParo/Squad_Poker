@@ -1,12 +1,12 @@
+import { Injector } from "@angular/core";
 import { AngularFireDatabase } from "@angular/fire/compat/database";
-import { map, Observable, Subscriber, Subscription, throwError } from "rxjs";
-import { Injectable, Injector } from "@angular/core";
+import { map, Observable, throwError } from "rxjs";
 
-import { BaseResourceModel } from "../models/base-rosource.model"
 import { ModalService } from "../components/modal/modal.service";
+import { User } from '../models/user.model';
 
 //tipo da classe é do tipo Model
-export abstract class BaseResourceService<T extends BaseResourceModel>{
+export abstract class BaseResourceService<T extends User>{
 
   protected angFireDb:AngularFireDatabase;
   protected modalService:ModalService
@@ -37,7 +37,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel>{
   | Atualizar Resource
   ----------------------------------------------*/
   update(resource:T):Promise<void>{
-      return this.angFireDb.list(this.API).update(resource.id, resource);
+      return this.angFireDb.list(this.API).update(resource.id || '', resource);
   }
   
   /*---------------------------------------------

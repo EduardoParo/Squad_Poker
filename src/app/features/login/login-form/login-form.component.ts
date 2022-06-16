@@ -12,13 +12,14 @@ import { LoginService } from "../shared/login.service";
 })
 
 export class LoginFormComponent {
-    
+    user:User = {}
+
     constructor(
         protected fb: FormBuilder,
-        protected service: LoginService,
+        protected loginService: LoginService,
         protected router:Router
     ){}
-
+    
     //Carregar o Formulario
     formGroup = this.fb.group({
         nome:[null],
@@ -27,33 +28,22 @@ export class LoginFormComponent {
     })
 
     //Action Login
-    actionLogin(){
-
-        this.formGroup.value.squad = (this.formGroup.value.squad).toUpperCase();
-        const usr:User = Object.assign( new User(), this.formGroup.value);
-        
+    actionLogin(){ 
         if (this.validForm()){
-            if(this.formGroup.value.participante != "espectador"){
-                this.service.create(usr)
+            this.setUserOnline();
+            if(this.user.participante != "espectador"){
+                this.loginService.createUser(this.user)
                 .then(()=>{
-                    this.service.locStorage(usr);  
+                    this.loginService.setLocalStorage(this.user);  
                     this.formSucess();
                    },
                    (err:any)=>this.formErro(err)
                 )
             }else{
-                this.service.locStorage(usr);  
+                this.loginService.setLocalStorage(this.user);  
                 this.formSucess();    
             }
         }
-    }
-
-    formSucess(){
-        this.router.navigate(['/home'])
-    }
-
-    formErro(err:any){
-        console.log('Erro na requisição do Serviço pagina Login', err);
     }
 
     validForm(): boolean{
@@ -70,6 +60,21 @@ export class LoginFormComponent {
         }
 
         return formOk;
+    }
+
+    setUserOnline(): void{
+        this.user.nome = this.formGroup.value.nome;
+        this.user.squad = this.formGroup.value.squad;
+        this.user.voto = 0;
+        this.user.participante = this.formGroup.value.participante;
+    }
+    
+    formSucess(){
+        this.router.navigate(['/home'])
+    }
+
+    formErro(err:any){
+        console.log('Erro na requisição do Serviço pagina Login', err);
     }
   
 }

@@ -12,15 +12,15 @@
             <div  class="card mt-3">
                   <div class="card-ponto text-center">
                     
-                    <span class = "text-primary" *ngIf="user.id == usrOnline.id || user.showVenc">
-                      <b>{{user.voto}}</b>
+                    <span class = "text-primary" *ngIf="user?.id == usrOnline.id || user?.showVenc">
+                      <b>{{user?.voto}}</b>
                     </span>
-                    <span *ngIf="user.voto>0 && user.id != usrOnline.id  && !user.showVenc; else other_content">
+                    <span *ngIf="user?.voto !== 0 && user?.id != usrOnline.id  && !user?.showVenc; else other_content">
                         OK
                     </span>
                     <ng-template #other_content>
-                        <span *ngIf="user.id != usrOnline.id && !user.showVenc;">
-                            {{user.squad.toUpperCase().slice(0,3)}}
+                        <span *ngIf="user?.id != usrOnline.id && !user?.showVenc;">
+                            {{user?.squad?.toUpperCase()?.slice(0,3)}}
                         </span>
 
                     </ng-template>
@@ -39,7 +39,7 @@
 
 <!--GRID-->
 <div class="container mt-5 mb-5 ">
-    <h4  class="border-bottom" >Participantes</h4>
+    <h4  class="border-bottom" >{{participants.length}} Participantes</h4>
     <div class="container bg-white mt-4 ">
         <div class="row">
             <div class="table-responsive  " style="overflow-x: hidden" >
@@ -56,32 +56,32 @@
                       <tbody>
                           <tr *ngFor="let user of participants">
                               <td><!--Nome-->
-                                  <span *ngIf="user.id == usrOnline.id || usrOnline.participante =='espectador'" class = "text-primary">
-                                      <b>{{user.nome}}</b>
+                                  <span *ngIf="user?.id == usrOnline.id || usrOnline.participante =='espectador'" class = "text-primary">
+                                      <b>{{user?.nome}}</b>
                                     </span>
-                                    <span *ngIf="user.id != usrOnline?.id && usrOnline.participante !='espectador'">
+                                    <span *ngIf="user?.id != usrOnline?.id && usrOnline.participante !='espectador'">
                                         ********
                                   </span>
                               </td>
                               
                               <!--Squad-->
                               <td>
-                                <span *ngIf="user.id == usrOnline.id" class = "text-primary">
-                                    <b>{{user.squad}}</b>
+                                <span *ngIf="user?.id == usrOnline.id" class = "text-primary">
+                                    <b>{{user?.squad}}</b>
                                 </span>
-                                <span *ngIf="user.id != usrOnline.id">
-                                    {{user.squad}}
+                                <span *ngIf="user?.id != usrOnline.id">
+                                    {{user?.squad}}
                                 </span>
                               </td>
                               
                               <td><!--Voto-->
-                                  <span  class = "text-primary" *ngIf="user.id == usrOnline.id || user.showVenc">
-                                      <b>{{user.voto}}</b>
+                                  <span  class = "text-primary" *ngIf="user?.id == usrOnline.id || user?.showVenc">
+                                      <b>{{user?.voto}}</b>
                                     </span>
-                                    <span *ngIf="user.id != usrOnline.id && !user.showVenc && user.voto == 0 ">
+                                    <span *ngIf="user?.id != usrOnline.id && !user?.showVenc && user?.voto == 0 ">
                                         {{'?'}}
                                     </span>
-                                    <span *ngIf="user.id != usrOnline.id && !user.showVenc && user.voto > 0 ">
+                                    <span *ngIf="user?.id != usrOnline.id && !user?.showVenc && user?.voto != 0  ">
                                         {{'OK'}}
                                     </span>
                               </td>

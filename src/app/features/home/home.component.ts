@@ -1,8 +1,6 @@
-import { ThisReceiver } from "@angular/compiler";
 import { Component, Injector, OnInit } from "@angular/core";
+import { Subscription } from 'rxjs';
 import { BaseResourceHome } from "src/app/shared/components/base-resource-home/base-resource-home";
-
-
 import { User } from "src/app/shared/models/user.model";
 
 @Component({
@@ -14,10 +12,10 @@ export class HomeComponent extends BaseResourceHome<User> implements OnInit{
 
     participants:User[] = [];
     spectators:User[] = [];
-    usrOnline = User.getUserOnline();
+    usrOnline: User = {};
     showBtnRealPoints = false;
     hasWinner = false;
-    
+    participants$ = new Subscription();
     
     constructor(
         protected injector:Injector,
@@ -28,30 +26,41 @@ export class HomeComponent extends BaseResourceHome<User> implements OnInit{
 
     override ngOnInit(): void {     
        super.ngOnInit;
-        this.loadUsers();    
+       this.getUserOnline(); 
+       this.getUsers();      
     }
 
-    loadUsers(): void{
-        this.service.getAll()
+    ngOnDestroy(): void {
+        this.participants$.unsubscribe();
+        localStorage.clear();
+        this.router.navigate(['sair']);
+      }
+
+    getUserOnline(): void {
+        this.usrOnline = this.userService.getUserOnline();
+    }
+    
+    getUsers(): void{
+        this.participants$ =  this.service.getAll()
         .subscribe(
             (resp)  =>{
                 this.hasWinner = false;
-                this.hasUpdateUser(resp);
+                this.canUpdateUser(resp);
                 this.getAllParticipants(resp);
-                this.hasResetPoint();
+                this.canResetPoint();
                 this.validHasWinner();
             },
             error => console.log('Erro servicegetAll',error)
         );
     }
 
-    hasUpdateUser(resp = []): void{
-        if(this.usrOnline.participante == "participante"){
-            this.usrOnline = resp.filter((e : any)=> e.id == this.usrOnline.id)[0];
-            if(this.usrOnline == undefined){
-                localStorage.clear();
-                this.router.navigate(['sair']);
-            }
+    canUpdateUser(resp = []): void{
+        if (this.usrOnline){
+            if(this.usrOnline.participante == "participante"){
+                this.usrOnline = resp.filter((e : any)=> e.id == this.usrOnline.id)[0];
+            }    
+        }else {
+           this.ngOnDestroy();
         }
     }
 
@@ -60,7 +69,7 @@ export class HomeComponent extends BaseResourceHome<User> implements OnInit{
                     e.participante == "participante");
     }
 
-    hasResetPoint(): void {
+    canResetPoint(): void {
         if(this.usrOnline.voto == 0 ){
             let points = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
             points.forEach(element => {
@@ -79,13 +88,11 @@ export class HomeComponent extends BaseResourceHome<User> implements OnInit{
             hasPointWinner = this.participants.filter((e:any)=> e.showVenc == true &&
              e.squad == this.usrOnline.squad && e.participante == "participante");
             
-            if(hasPointWinner.length >0 && this.participants[0].voto>0){
+            if(hasPointWinner.length >0 && this.participants[0].voto !== 0){
                 this.hasWinner = true;
                 this.service.revealPoints(this.participants, this.hasWinner);
             }
-        }   
-        
-        
+        }      
     }
 
 

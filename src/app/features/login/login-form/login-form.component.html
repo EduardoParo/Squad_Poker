@@ -14,13 +14,16 @@
         <form [formGroup]="formGroup" (submit)="actionLogin()">
 
           <div class="form-group">
-            <input formControlName="nome" id="nome" type="text" class="form-control" placeholder="Apelido ou Vazio" required>
+            <input formControlName="nome" id="nome" type="text" class="form-control" placeholder="Apelido ou Vazio">
           </div>
           <div class="form-group">
-            <input formControlName="squad" id="squad" type="text" class="form-control" placeholder="Squad ou Chave de Acesso" required>
+            <select formControlName="squad" id="squad" type="text" class="form-control" placeholder="Squad ou Chave de Acesso" required>
+              <option selected value="Faturamento">DSERFAT</option>
+              <option value="Faturamento2">DSERFAT2</option>
+            </select>
           </div>
           <div class="form-group">
-            <select  formControlName="participante" id="participante" class="custom-select" required>
+            <select formControlName="participante" id="participante" class="custom-select" required>
               <option selected value="participante">Participante</option>
               <option value="espectador">Espectador</option>
             </select>
@@ -28,8 +31,6 @@
           <button type="submit" class="btn btn-lg btn-info btn-block">Entrar</button>
 
         </form>
-        <!--<pre>{{formGroup.value | json}}</pre>-->
-      
       </div>
     </div>
   </div>

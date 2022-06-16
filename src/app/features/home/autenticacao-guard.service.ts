@@ -1,19 +1,20 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
-import { User } from "src/app/shared/models/user.model";
-import { HomeService } from "./shared/home.service";
+import { UserService } from 'src/app/shared/services/users.service';
+import { HomeService } from "../../shared/services/home.service";
 
 @Injectable()
 export class AutenticacaoGuard implements CanActivate{
 
     constructor(
         private homeService:HomeService,
-        private router:Router
+        private router:Router,
+        public userService: UserService
     ){}
     
     canActivate() :boolean{
         let participants = [];
-        let userOn = User.getUserOnline();
+        let userOn = this.userService.getUserOnline();
 
         //console.log('guard-service',this.router.parent)
         if(userOn.id !==null && userOn.squad !==null){

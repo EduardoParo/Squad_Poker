@@ -1,8 +1,8 @@
-import { Component, Injector, Input, OnInit } from "@angular/core";
+import { Component, Injector, Input } from "@angular/core";
 import { BaseResourceHome } from "src/app/shared/components/base-resource-home/base-resource-home";
 
 import { User } from "src/app/shared/models/user.model";
-import { HomeService } from "../shared/home.service";
+import { HomeService } from "../../../shared/services/home.service";
 
 
 @Component({

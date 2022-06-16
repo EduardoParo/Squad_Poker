@@ -1,7 +1,6 @@
-﻿import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, ElementRef, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { HomeService } from 'src/app/features/home/shared/home.service';
-import { User } from '../../models/user.model';
+import { HomeService } from 'src/app/shared/services/home.service';
 import { ModalService } from './modal.service';
 
 @Component({ 
@@ -88,18 +87,18 @@ export class ModalComponent implements OnInit, OnDestroy {
           
         }else if (opc == 3){
             if(params[0] <= 1){
-                this.tituloModal=`${params[1]} Resultado !!! `;
+                this.tituloModal=`${params.winnerPoint} Resultado !!! `;
                 this.bodyModal =` Não indentificamos um ganhador `;
             }else{
-                this.tituloModal=`${params[1]} Ganhou !!! `;
-                this.bodyModal =` ${params[0]} participantes pontuaram ${params[1]}`;
+                this.tituloModal=`${params.winnerPoint} Ganhou !!! `;
+                this.bodyModal =` ${params.qtdOfParticipants} participantes pontuaram ${params.winnerPoint}`;
             }
             const modal = document.querySelector('#funcActionModal');
             modal?.setAttribute('style','display:none');
 
         }else if (opc == 4){
             this.tituloModal=" Empate !!! ";
-            this.bodyModal =`Não indentificamos um ganhador`;  
+            this.bodyModal =`${params[0][0].qtdOfParticipants} participantes pontuaram ${params[0][0].winnerPoint}; e ${params[0][1].qtdOfParticipants} participantes ponturam ${params[0][1].winnerPoint}; `;  
             modal?.setAttribute('style','display:none');
             
         }else if (opc == 5){
