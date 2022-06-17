@@ -3,6 +3,7 @@
 import { HomeService } from 'src/app/shared/services/home.service';
 import { ModalService } from './modal.service';
 
+
 @Component({ 
     selector: 'app-modal', 
     templateUrl: 'modal.component.html', 
@@ -81,18 +82,18 @@ export class ModalComponent implements OnInit, OnDestroy {
     
 
         }else if (opc == 2){
-            this.tituloModal='Resetar Pontos';
+            this.tituloModal='Reiniciar Pontos';
             this.bodyModal ='Tem certeza que deseja reiniciar os Pontos ?'
             this.funcActionModal = () => this.homeService.resetPoints(params);
           
         }else if (opc == 3){
-            if(params[0] <= 1){
-                this.tituloModal=`${params.winnerPoint} Resultado !!! `;
-                this.bodyModal =` Não Indentificamos um Ganhador `;
-            }else{
-                this.tituloModal=`${params.winnerPoint} Ganhou !!! `;
-                this.bodyModal =` ${params.qtdOfParticipants} Participantes Pontuaram ${params.winnerPoint}`;
-            }
+            const audio = new Audio();
+            audio.src = '../../../../assets/Aplausos.mp3';
+            audio.load();
+            audio.play();
+            this.tituloModal=`${params.winnerPoint} Ganhou !!! `;
+            this.bodyModal =` ${params.qtdOfParticipants} Participantes Pontuaram ${params.winnerPoint}`;
+            
             const modal = document.querySelector('#funcActionModal');
             modal?.setAttribute('style','display:none');
 
