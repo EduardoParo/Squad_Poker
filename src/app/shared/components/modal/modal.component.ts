@@ -98,6 +98,10 @@ export class ModalComponent implements OnInit, OnDestroy {
             modal?.setAttribute('style','display:none');
 
         }else if (opc == 4){
+            const audio = new Audio();
+            audio.src = '../../../../assets/Empate.mp3';
+            audio.load();
+            audio.play();
             this.tituloModal=" Empate !!! ";
             this.bodyModal =`${params[0][0].qtdOfParticipants} Participantes Pontuaram ${params[0][0].winnerPoint}; e ${params[0][1].qtdOfParticipants} Participantes Ponturam ${params[0][1].winnerPoint}; `;  
             modal?.setAttribute('style','display:none');
